@@ -83,12 +83,12 @@ for seq in seqsList:
     headerList.append(seq["header"])
     
 Avg = sum(lengthList) / numSeqs
-print(Avg)
+print("\nAverage length = " + str(round(Avg,2)))
 CI = statistics.stdev(lengthList)  * 1.96
-print(CI)
 upper = Avg + CI
 lower = Avg - CI
-print(str(lower) + " - " + str(upper))
+print("Average - 1.96 standard deviations = " + str(round(lower,2)))
+print("Average + 1.96 standard deviations = " + str(round(upper,2)) + "\n")
 
 colours = []
 for x in range (0, numSeqs):
@@ -109,21 +109,11 @@ outputseqs = []
 for seq in seqsList:
     if ((seq["length"] >= shortest) and (seq["length"] <= longest)):
         outputseqs.append(seq)
+    else:
+        print("Excluding " + seq["header"])
 
 print("There are " + str(len(outputseqs)) + " seqs in the output list")
-
-"""
-with open(outputFileLocation, "w") as file:
-    for seq in outputseqs:
-        file.write(seq["header"] + "\n")
-        length = math.ceil(len(seq["header"]))
-        outputString = ""
-        for x in range (0, length):
-            outputString += (seq["sequence"][0+(80*x):80+(80*x)])
-        file.write(outputString)
-"""
 
 with open(outputFileLocation, "w") as file:
     for seq in outputseqs:
         file.write(seq["header"] + "\n" + seq["sequence"] + "\n")
-       
